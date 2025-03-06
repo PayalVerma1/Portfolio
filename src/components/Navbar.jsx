@@ -4,6 +4,7 @@ import gsap from "gsap";
 import { HiOutlineMenu, HiX } from "react-icons/hi";
 
 const Navbar = () => {
+  const navbarRef = useRef(null);
   const linesRef = useRef([]);
   const sidebarLinksRef = useRef([]);
   const sidebarLineRef = useRef(null);
@@ -15,44 +16,53 @@ const Navbar = () => {
   useEffect(() => {
     const tl = gsap.timeline();
 
-    // Animate Menu Icon
+    // Animate Navbar from left to right (slower)
+    tl.fromTo(
+      navbarRef.current,
+      { x: -200, opacity: 0 },
+      {
+        x: 0,
+        opacity: 1,
+        duration: 3,  // Increased duration
+        ease: "power3.out",
+      }
+    );
+
+    // Sidebar Animations (Runs after Navbar)
     tl.fromTo(
       linesRef.current,
       { x: -50, opacity: 0 },
       {
         x: 0,
         opacity: 1,
-        duration: 0.8,
-        stagger: 0.2,
+        duration: 1,  // Slowed down
+        stagger: 0.3,
         ease: "power3.out",
       }
     );
 
-    // Animate Sidebar Links (BUY, BLOG, HELP)
     tl.fromTo(
       sidebarLinksRef.current.slice(0, 3),
       { y: -30, opacity: 0 },
       {
         y: 0,
         opacity: 1,
-        duration: 1,
-        stagger: 0.2,
+        duration: 1.5,  // Slower transition
+        stagger: 0.3,
         ease: "power3.out",
       }
     );
 
-    // Animate Sidebar Vertical Line (before FACEBOOK)
     tl.fromTo(
       sidebarLineRef.current,
       { height: 0, opacity: 0 },
-      { height: "50px", opacity: 1, duration: 0.8, ease: "power3.out" }
+      { height: "50px", opacity: 1, duration: 1.2, ease: "power3.out" }
     );
 
-    // Animate FACEBOOK separately
     tl.fromTo(
       sidebarLinksRef.current[3],
       { y: -20, opacity: 0 },
-      { y: 20, opacity: 1, duration: 1, ease: "power3.out" }
+      { y: 20, opacity: 1, duration: 1.5, ease: "power3.out" }
     );
   }, []);
 
@@ -67,7 +77,7 @@ const Navbar = () => {
     <div>
       {/* Left Sidebar */}
       <div className="fixed top-0 left-0 h-full w-16 bg-neutral-900 border-r border-white flex flex-col items-center pt-4">
-        {/* Hamburger Menu (Increased Space Below) */}
+        {/* Hamburger Menu */}
         <div className="flex flex-col gap-2 cursor-pointer mb-10">
           <div
             ref={(el) => (linesRef.current[0] = el)}
@@ -83,7 +93,7 @@ const Navbar = () => {
           ></div>
         </div>
 
-        {/* Sidebar Links (BUY, BLOG, HELP) */}
+        {/* Sidebar Links */}
         <div className="flex flex-col items-center space-y-19 mt-6">
           {sideLinks.slice(0, 3).map(({ name, color }, index) => (
             <NavLink
@@ -96,13 +106,11 @@ const Navbar = () => {
           ))}
         </div>
 
-        {/* Sidebar Vertical Line (before FACEBOOK) */}
+        {/* Sidebar Line */}
         <div
           ref={sidebarLineRef}
           className="w-[2px] min-h-[120px] bg-white my-6 mt-10 opacity-0"
         ></div>
-
-        {/* Facebook Link */}
         <NavLink
           className="text-blue-400 hover:text-white mt-2 mb-4 text-lg font-bold rotate-270 vertical-text"
           ref={(el) => (sidebarLinksRef.current[3] = el)}
@@ -112,7 +120,10 @@ const Navbar = () => {
       </div>
 
       {/* Top Navbar */}
-      <nav className="fixed top-0 right-0  text-white px-8 py-4 flex justify-end space-x-8 text-lg font-bold tracking-widest z-50 md:flex">
+      <nav
+        ref={navbarRef}
+        className="fixed top-0 right-0 text-white px-8 py-4 flex justify-end space-x-8 text-lg font-bold tracking-widest z-50 md:flex"
+      >
         {/* Desktop Navigation */}
         <div className="hidden md:flex space-x-8">
           <NavLink to="/" className="hover:text-blue-400">
@@ -129,7 +140,6 @@ const Navbar = () => {
           </NavLink>
         </div>
 
-        {/* Mobile Menu Button */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           className="md:hidden text-2xl"
@@ -138,9 +148,8 @@ const Navbar = () => {
         </button>
       </nav>
 
-      {/* Mobile Menu */}
       <div
-        className={`fixed top-0 right-0 w-screen h-screen bg-neutral-900 text-white p-8  flex flex-col justify-between space-y-6 transform ${
+        className={`fixed top-0 right-0 w-screen h-screen bg-neutral-900 text-white p-8 flex flex-col justify-between space-y-6 transform ${
           mobileMenuOpen ? "translate-x-0" : "translate-x-full"
         } transition-transform duration-300 ease-in-out md:hidden`}
       >
