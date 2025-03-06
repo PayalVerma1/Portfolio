@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+:root {
+  --font-primary: "Orbitron", sans-serif; /* Change as needed */
+}
+
+body {
+  font-family: var(--font-primary);
+}
