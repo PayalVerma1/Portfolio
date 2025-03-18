@@ -19,11 +19,11 @@ const Navbar = () => {
     // Animate Navbar from left to right (slower)
     tl.fromTo(
       navbarRef.current,
-      { x: -200, opacity: 0 },
+      { x: 20, opacity: 0 },
       {
         x: 0,
         opacity: 1,
-        duration: 3,  // Increased duration
+        duration: 2,  // Increased duration
         ease: "power3.out",
       }
     );
@@ -36,7 +36,7 @@ const Navbar = () => {
         x: 0,
         opacity: 1,
         duration: 1,  // Slowed down
-        stagger: 0.3,
+        stagger: 0.01,
         ease: "power3.out",
       }
     );
@@ -47,8 +47,8 @@ const Navbar = () => {
       {
         y: 0,
         opacity: 1,
-        duration: 1.5,  // Slower transition
-        stagger: 0.3,
+        duration: 1,  // Slower transition
+        stagger: 0.01,
         ease: "power3.out",
       }
     );
@@ -56,13 +56,13 @@ const Navbar = () => {
     tl.fromTo(
       sidebarLineRef.current,
       { height: 0, opacity: 0 },
-      { height: "50px", opacity: 1, duration: 1.2, ease: "power3.out" }
+      { height: "50px", opacity: 1, duration: 0.1, ease: "power3.out" }
     );
 
     tl.fromTo(
       sidebarLinksRef.current[3],
       { y: -20, opacity: 0 },
-      { y: 20, opacity: 1, duration: 1.5, ease: "power3.out" }
+      { y: 20, opacity: 1, duration: 1, ease: "power3.out" }
     );
   }, []);
 
