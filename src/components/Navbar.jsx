@@ -16,14 +16,14 @@ const Navbar = () => {
   useEffect(() => {
     const tl = gsap.timeline();
 
-    // Animate Navbar from left to right (slower)
+    // Animate Navbar from left to right (faster)
     tl.fromTo(
       navbarRef.current,
       { x: 20, opacity: 0 },
       {
         x: 0,
         opacity: 1,
-        duration: 2,  // Increased duration
+        duration: 1,  // Reduced duration
         ease: "power3.out",
       }
     );
@@ -35,7 +35,7 @@ const Navbar = () => {
       {
         x: 0,
         opacity: 1,
-        duration: 1,  // Slowed down
+        duration: 0.5,  // Reduced duration
         stagger: 0.01,
         ease: "power3.out",
       }
@@ -47,11 +47,16 @@ const Navbar = () => {
       {
         y: 0,
         opacity: 1,
-        duration: 1,  // Slower transition
+        duration: 0.5,  // Reduced duration
         stagger: 0.01,
         ease: "power3.out",
       }
     );
+    tl.from("NavLink",{
+      y:-30,
+      opacity:0,
+      stagger:0.3,
+    })
 
     tl.fromTo(
       sidebarLineRef.current,
@@ -62,14 +67,14 @@ const Navbar = () => {
     tl.fromTo(
       sidebarLinksRef.current[3],
       { y: -20, opacity: 0 },
-      { y: 20, opacity: 1, duration: 1, ease: "power3.out" }
+      { y: 20, opacity: 1, duration: 0.5, ease: "power3.out" }  // Reduced duration
     );
   }, []);
 
   const sideLinks = [
-    { name: "LINKEDIN", color: "text-white" },
-    { name: "GITHUB", color: "text-white" },
-    { name: "TWITTER", color: "text-red-500" },
+    { name: "TWITTER", color: "text-white" },
+    { name: "DISCORD", color: "text-white" },
+    { name: "LINKEDIN", color: "text-red-500" },
     { name: "FACEBOOK", color: "text-blue-400" },
   ];
 
